@@ -20,10 +20,8 @@ jobs:
        #sudo mkswap /swapfile
        #sudo swapon /swapfile
        #free -m
-       # install python 2
        pip install virtualenv 
        export PATH=$PATH:$(pwd)/.local/bin
-       sudo apt install python3-virtualenv -y
        sudo apt install openssl -y
        sudo aptitude install libssl-dev -y
        sudo apt-get install libtinfo5 neofetch -y
