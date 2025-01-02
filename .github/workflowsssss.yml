@@ -24,13 +24,11 @@ jobs:
        export PATH=$PATH:$(pwd)/.local/bin
        sudo apt install openssl -y
        sudo aptitude install libssl-dev -y
-       sudo apt-get install libtinfo5 neofetch -y
        # install repo
        mkdir -p ~/.bin
        PATH="${pwd}/.bin:${PATH}"
        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
        chmod a+rx ~/.bin/repo
-       neofetch
 
     - name: set permissions
       run: sudo chmod +rwx *
