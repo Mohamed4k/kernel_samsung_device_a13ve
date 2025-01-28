@@ -3429,7 +3429,7 @@ uint32_t wlanSetChipEcoInfo(IN struct ADAPTER *prAdapter)
 {
 	uint32_t hw_version = 0, sw_version = 0;
 	struct mt66xx_chip_info *prChipInfo = prAdapter->chip_info;
-	uint32_t chip_id = prChipInfo->chip_id;
+	uint32_t __maybe_unused chip_id = prChipInfo->chip_id;
 	/* WLAN_STATUS status; */
 	uint32_t u4Status = WLAN_STATUS_SUCCESS;
 
@@ -13810,10 +13810,6 @@ TpeEndFlush:
 
 void wlanSetConnsysFwLog(IN struct ADAPTER *prAdapter)
 {
-#ifdef CONFIG_MTK_CONNSYS_DEDICATED_LOG_PATH
-	struct CMD_CONNSYS_FW_LOG rFwLogCmd;
-	uint32_t u4BufLen;
-#endif
 	int32_t u4LogLevel = ENUM_WIFI_LOG_LEVEL_DEFAULT;
 
 	/* Enable FW log */
@@ -13824,31 +13820,6 @@ void wlanSetConnsysFwLog(IN struct ADAPTER *prAdapter)
 			ENUM_WIFI_LOG_LEVEL_VERSION_V1,
 			ENUM_WIFI_LOG_MODULE_FW,
 			u4LogLevel, TRUE);
-
-#ifdef CONFIG_MTK_CONNSYS_DEDICATED_LOG_PATH
-	kalMemZero(&rFwLogCmd, sizeof(rFwLogCmd));
-
-	rFwLogCmd.fgCmd = (int)FW_LOG_CMD_ON_OFF;
-	rFwLogCmd.fgValue = getFWLogOnOff();
-	rFwLogCmd.fgEarlySet = TRUE;
-
-	connsysFwLogControl(prAdapter,
-		&rFwLogCmd,
-		sizeof(struct CMD_CONNSYS_FW_LOG),
-		&u4BufLen);
-
-	if (getFWLogLevel() != -1) {
-		rFwLogCmd.fgCmd =
-			(int)FW_LOG_CMD_SET_LEVEL;
-		rFwLogCmd.fgValue = getFWLogLevel();
-		rFwLogCmd.fgEarlySet = TRUE;
-
-		connsysFwLogControl(prAdapter,
-		&rFwLogCmd,
-		sizeof(struct CMD_CONNSYS_FW_LOG),
-		&u4BufLen);
-	}
-#endif
 
 }
 

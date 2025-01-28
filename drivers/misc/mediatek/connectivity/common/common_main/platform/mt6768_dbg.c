@@ -5,6 +5,7 @@
 
 #include "mtk_wcn_consys_hw.h"
 
+
 int g_mapped_reg_table_sz_mt6768 = 11;
 struct reg_map_addr g_mapped_reg_table_mt6768[] = {
 	{ 0x18007000,	NULL,	0x140 },
@@ -486,3 +487,4 @@ INT32 dump_conn_ILM_corrupt_issue_debug_mt6768(const char *trg_str)
 	return execute_dump_action(trg_str, "conn_ILM_corrupt_issue_debug",
 			g_conn_ILM_corrupt_issue_debug, ARRAY_SIZE(g_conn_ILM_corrupt_issue_debug));
 }
+

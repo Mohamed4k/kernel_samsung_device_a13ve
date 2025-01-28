@@ -15,6 +15,8 @@
 #include <linux/kernel.h>
 #include <linux/bug.h>
 
+
+
 void ring_init(void *base, unsigned int max_size, unsigned int read,
 	unsigned int write, struct ring *ring)
 {

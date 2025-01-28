@@ -30,9 +30,6 @@ endif
 KBUILD_MODPOST_FAIL_ON_WARNINGS := y
 ###############################################################################
 
-# only WMT align this design flow, but gps use this also.
-ccflags-y += -D MTK_WCN_REMOVE_KERNEL_MODULE
-
 ifeq ($(CONFIG_ARM64), y)
     ccflags-y += -D CONFIG_MTK_WCN_ARM64
 endif
@@ -62,13 +59,7 @@ ccflags-y += -I$(srctree)/drivers/devfreq
 ###############################################################################
 
 MODULE_NAME := gps_drv
-ifeq ($(CONFIG_WLAN_DRV_BUILD_IN),y)
-$(warning $(MODULE_NAME) build-in boot.img)
 obj-y += $(MODULE_NAME).o
-else
-$(warning $(MODULE_NAME) is kernel module)
-obj-m += $(MODULE_NAME).o
-endif
 
 GPS_DRV_CONTROL_LNA := n
 GPS_DL_SUPPORT := n
@@ -208,7 +199,6 @@ ccflags-y += -DGPS_DL_HAS_MOCK=1
 endif
 
 else #Legacy drivers
-WMT_SRC_FOLDER := $(TOP)/common
 
 ifeq ($(CONFIG_MTK_COMBO_CHIP),)
 ifneq ($(filter "y",$(CONFIG_MTK_COMBO_CHIP_MT6620) $(CONFIG_MTK_COMBO_CHIP_MT6628) $(CONFIG_MTK_COMBO_CHIP_MT6630) $(CONFIG_MTK_COMBO_CHIP_MT6632) $(CONFIG_MTK_COMBO_CHIP_MT7668)),)
@@ -244,9 +234,6 @@ ccflags-y += -I$(WMT_SRC_FOLDER)/common_main/include
 ccflags-y += -I$(WMT_SRC_FOLDER)/common_main/linux/include
 ccflags-y += -I$(WMT_SRC_FOLDER)/common_main/core/include
 ccflags-y += -I$(WMT_SRC_FOLDER)/common_main/platform/include
-ifneq ($(CONFIG_MTK_CONNSYS_DEDICATED_LOG_PATH),)
-ccflags-y += -I$(WMT_SRC_FOLDER)/debug_utility
-endif
 ifeq ($(GPS_DRV_CONTROL_LNA),y)
 ccflags-y += -I$(GPS_SRC_FOLDER)/gps_stp/lna_ctrl/inc
 ccflags-y += -I$(GPS_SRC_FOLDER)/gps_stp/
@@ -271,9 +258,6 @@ endif
 endif
 ifneq ($(CONFIG_MTK_GPS_EMI),)
 $(MODULE_NAME)-objs += gps_stp/gps_emi.o
-endif
-ifneq ($(CONFIG_MTK_CONNSYS_DEDICATED_LOG_PATH),)
-$(MODULE_NAME)-objs += gps_stp/fw_log_gps.o
 endif
 
 endif
